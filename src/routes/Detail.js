@@ -17,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 
 function Detail(props) {
   let { id } = useParams();
-  let 찾은상품 = props.shoes.find(x => x.id == id);
+  let findProduct = props.shoes.find(x => x.id == id);
   let [alert, setAlert] = useState(true);
-  let [탭, 탭변경] = useState(0);
+  let [tap, setTap] = useState(0);
   let [fade2, setFade2] = useState("");
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -39,16 +39,16 @@ function Detail(props) {
     };
   }, []);
 
-  useEffect(()=>{
-    let 꺼낸거 = localStorage.getItem('watched')
-    꺼낸거 = JSON.parse(꺼낸거)
-    꺼낸거.push(찾은상품.id)
+  // useEffect(()=>{
+  //   let 꺼낸거 = localStorage.getItem('watched')
+  //   꺼낸거 = JSON.parse(꺼낸거)
+  //   꺼낸거.push(찾은상품.id)
   
-    //Set으로 바꿨다가 다시 array로 만들기
-    꺼낸거 = new Set(꺼낸거)
-    꺼낸거 = Array.from(꺼낸거)
-    localStorage.setItem('watched', JSON.stringify(꺼낸거))
-  }, [])
+  //   //Set으로 바꿨다가 다시 array로 만들기
+  //   꺼낸거 = new Set(꺼낸거)
+  //   꺼낸거 = Array.from(꺼낸거)
+  //   localStorage.setItem('watched', JSON.stringify(꺼낸거))
+  // }, [])
   return (
     <div className={"container start " + fade2}>
       {alert == true ? (
@@ -63,9 +63,9 @@ function Detail(props) {
           />
         </div>
         <div className="col-md-6 mt-4">
-          <h4 className="pt-5">{찾은상품.title}</h4>
-          <p>{찾은상품.content}</p>
-          <p>{찾은상품.price}원</p>
+          <h4 className="pt-5">{findProduct.title}</h4>
+          <p>{findProduct.content}</p>
+          <p>{findProduct.price}원</p>
           <button
             className="btn btn-danger"
             onClick={() => {
@@ -75,16 +75,16 @@ function Detail(props) {
                 navigate("/cart")
                 dispatch(
                   addItem({
-                    id: `${찾은상품.id}`,
-                    name: `${찾은상품.title}`,
+                    id: `${findProduct.id}`,
+                    name: `${findProduct.title}`,
                     count: 1,
                   })
                 );
               }else{
                 dispatch(
                   addItem({
-                    id: `${찾은상품.id}`,
-                    name: `${찾은상품.title}`,
+                    id: `${findProduct.id}`,
+                    name: `${findProduct.title}`,
                     count: 1,
                   })
                 );
@@ -102,7 +102,7 @@ function Detail(props) {
         <Nav.Item>
           <Nav.Link 
             onClick={() => {
-              탭변경(0);
+              setTap(0);
             }}
             eventKey="link0"
           >
@@ -112,7 +112,7 @@ function Detail(props) {
         <Nav.Item>
           <Nav.Link
             onClick={() => {
-              탭변경(1);
+              setTap(1);
             }}
             eventKey="link1"
           >
@@ -122,7 +122,7 @@ function Detail(props) {
         <Nav.Item>
           <Nav.Link
             onClick={() => {
-              탭변경(2);
+              setTap(2);
             }}
             eventKey="link2"
           >
@@ -130,7 +130,7 @@ function Detail(props) {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      <TabContent 탭={탭} 찾은상품={찾은상품}/>
+      <TabContent tap={tap} findProduct={findProduct}/>
     </div>
   );
 }
@@ -143,7 +143,7 @@ function Detail(props) {
 //     return <div>내용2</div>;
 //   }
 // }
-function TabContent({ 탭,찾은상품}) {
+function TabContent({ tap,findProduct}) {
   let [fade, setFade] = useState("");
   useEffect(() => {
     setTimeout(() => {
@@ -153,10 +153,10 @@ function TabContent({ 탭,찾은상품}) {
     return () => {
       setFade("");
     };
-  }, [탭]);
+  }, [tap]);
   return (
     <div className={"start " + fade}>
-      {[<div>{찾은상품.content}</div>, <div>정품만 취급 합니다.</div>, <div>{찾은상품.price}원</div>][탭]}
+      {[<div>{findProduct.content}</div>, <div>정품만 취급 합니다.</div>, <div>{findProduct.price}원</div>][tap]}
     </div>
   );
 }

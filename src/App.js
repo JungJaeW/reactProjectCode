@@ -50,7 +50,7 @@ function App() {
           path="/"
           element={
             <>
-              {/* <div className="main-bg"></div> */}
+              
               <div className="mainPage">
                 <div className="img1"></div>
                 <div className="img2"></div>
@@ -58,7 +58,7 @@ function App() {
               <h1 className="h1" style={{fontWeight:700,marginTop:"20px"}}>New Design</h1>
               <div className="div-container">
               <Swiper
-      // install Swiper modules
+     
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={50}
       slidesPerView={3}
@@ -78,8 +78,8 @@ function App() {
     <h1 style={{fontWeight:700}}>Products</h1>
               <Container>
                 <Row>
-                  {shoes.map((a, i) => {
-                    return (
+                  {shoes.map((a, i) => 
+                    
                       <Card
                         navigate={navigate}
                         shoes={shoes[i]}
@@ -87,8 +87,8 @@ function App() {
                         key={i}
                         
                       ></Card>
-                    );
-                  })}
+                    
+                  )}
                 </Row>
               </Container>
              
@@ -104,16 +104,6 @@ function App() {
                     setChange(change+1)
                     console.log(change)
                   })
-              // }else if(change<4){
-              //   axios
-              //   .get("https://codingapple1.github.io/shop/data"+3+".json")
-              //   .then((결과) => {
-              //     console.log(change)
-              //     let copy1 = [...shoes, ...결과.data];
-              //     setShoes(copy1);
-              //     console.log(copy1)
-              //     setChange(change+1)
-              //   })
               }else{
                 alert("마지막 상품입니다.")
                 document.querySelector("button").style.display ='none';
